@@ -1,5 +1,5 @@
 // Authored by Mike Grad
-
+// NOTE:  Chart JS Library - include cdn link in html
 // **********
 // GOALS
 // **********
@@ -25,83 +25,108 @@
 // use d3 version 5
 let stateData = [];
 let covidData = [];
-d3.csv("data/cleaned_csv/cleaned_stateData.csv").then(function(data) {
-    console.log(data[0]);
-    stateData = data;
-  }).then(function() {
-    d3.csv("data/cleaned_csv/cleaned_us-state-covid-data.csv").then(function(data) {
-      console.log(data[0]);
-      covidData = data;
-    });    
-  }).then(process);
+// d3.csv("data/cleaned_csv/cleaned_stateData.csv").then(function(data) {
+//     console.log(data[0]);
+//     stateData = data;
+//   }).then(function() {
+//     d3.csv("data/cleaned_csv/cleaned_us-state-covid-data.csv").then(function(data) {
+//       console.log(data[0]);
+//       covidData = data;
+//     });    
+//   }).then(process);
+Promise.all([
+  d3.csv("data/cleaned_csv/cleaned_stateData.csv"),
+  d3.csv("data/cleaned_csv/cleaned_us-state-covid-data.csv"),
+  d3.csv("data/cleaned_csv/cleaned_state_list.csv"),
+]).then(function(files) {
+  stateData = files[0];
+  covidData = files[1];
+  stateList = files[2];
+  process();
+}).catch(function(err) {
+  // handle error here
+})
 
-function process() {
-  // *****************************************************
-  // STEP 2:  Create Chart:  Covid Infections vs. Latitude
-  // *****************************************************
 
-  // *****************************************************
-  // STEP 3:  Create Chart:  Covid Deaths vs. Latitude
-  // *****************************************************
-
-  // *******************************************************************
-  // STEP 4:  Create Chart:  Covid Infections vs. Per Captia Income 2019
-  // *******************************************************************
-  // ACTION: REVIEW d3.csv activity
-  // ACTION: REVIEW map and unpack functions
-  // loop thru state income data to get the correct row #3
+function process() { 
+  
+  // Define x values
   let stateIncomeData = [];
   console.log(stateData);
   let stateDataFiltered = stateData.filter(d => d.LineCode === "3");
   console.log(stateDataFiltered);
   for (row of stateDataFiltered) {
-    // stateIncomeData = stateIncomeData.push(stateDataFiltered.2019);
+    stateIncomeData.push(+row["2019"]);
   };
   console.log(stateIncomeData);
 
-  // loop thru covid data to get covid totals by state
+  // Define y values
 
-  // let covidStateInfection = [];
+  let covidStateInfection = [];
+  let covidStateDeath = [];
+  console.log(covidData);
+  for (row of covidStateData) {
+    covidStateInfection = covidStateInfection + row.case;
+    covidStateDeath = covidStateDeath + row.deaths;
+  };
+  console.log(covidStateInfection);
+  console.log(covidStateDeath);
 
-  // let covidStateDeathAL = [];
-  // for (row of covidData) {
-  //   for (state of stateAbbr) {
-  //     if (state === row.state) {
-  //         covidStateInfection = covidStateInfection + row.case;
-  //         covidStateDeath = covidStateDeath + row.deaths;
-  //     };
-  //   };
-  // };
-  // console.log(covidStateInfection);
+  function buildPlot(x_values, y_values, layout) {
 
-  // let trace1 = {
-  //   x: stateIncomeData,
-  //   y: covidStateInfections,
-  //   type: "scatter",
-  //   mode: "markers"
-  // };
+    let trace1 = {
+      x: stateIncomeData,
+      y: covidStateInfection,
+      type: "scatter",
+      mode: "markers"
+    };
 
-  // let data = [trace1];
+    let data = [trace1];
 
-  // let layout = {
-  //   title: "2020 Covid Infections vs. 2019 Per Capita Income",
-  //   xaxis: { title: "2019 Per Capita Income"},
-  //   yaxis: { title: "2020 Covid Infections"}
-  // };
-
-  // Plotly.newPlot("plot", data, layout);
+    Plotly.newPlot("plot", data, layout);  
 
 
+  } 
 
-}
+  // *****************************************************
+  // STEP 2:  Create Chart:  Covid Infections vs. Latitude
+  // *****************************************************
+  let layout1 = {
+    title: "2020 Covid Infections vs. Latitude",
+    xaxis: { title: "Latitude"},
+    yaxis: { title: "2020 Covid Infections"}
+  };
 
-// ACTION:  Create state-lat-lng.csv file
-// const stateGeoData = d3.csv("/data/cleaned_data/state-lat-lng.csv").then(function(data) {
-//     console.log(data[0]);
-// });
-    
-// // ACTION:  Create state-lat-lng.csv file
-// const stateAbbr = d3.csv("/data/cleaned_data/state-abbr.csv").then(function(data) {
-//   console.log(data[0]);
-// });
+  buildPlot(covidStateInfection, Latitude, layout1);
+  // *****************************************************
+  // STEP 3:  Create Chart:  Covid Deaths vs. Latitude
+  // *****************************************************
+  let layout2 = {
+    title: "2020 Covid Deaths vs. Latitude",
+    xaxis: { title: "Latitude"},
+    yaxis: { title: "2020 Covid Deaths"}
+  };
 
+  buildPlot(covidStateDeath, Latitude, layout2);
+  // *******************************************************************
+  // STEP 4:  Create Chart:  Covid Infections vs. Per Captia Income 2019
+  // *******************************************************************
+  
+  let layout3 = {
+    title: "2020 Covid Infections vs. 2019 Per Capita Income",
+    xaxis: { title: "2019 Per Capita Income"},
+    yaxis: { title: "2020 Covid Infections"}
+  };
+  buildPlot(covidStateInfection, stateIncomeData, layout3);
+
+
+  // *******************************************************************
+  // STEP 5:  Create Chart:  Covid Infections vs. Per Captia Income 2019
+  // *******************************************************************
+  let layout4 = {
+    title: "2020 Covid Deaths vs. 2019 Per Capita Income",
+    xaxis: { title: "2019 Per Capita Income"},
+    yaxis: { title: "2020 Covid Deaths"}
+  };
+  buildPlot(covidStateDeath, stateIncomeData, layout4);
+  
