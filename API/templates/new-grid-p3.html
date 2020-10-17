@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Covid-19 COMMAND CENTER</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin-top: 10px ;
+            margin-left: 20px;
+            font-size: 18px;
+            
+        }
+
+        .row > div {
+            border: 1px solid gray;
+            background: #ffff;
+            color: black;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    
+<div class="container">
+    <div class="row">
+        <div class="nav-link-active col-md-3">Map
+
+        </div>
+        
+        <div class="col-md-3">Charts</div>
+        </ul>
+            <li class="row col-md-3"> 
+            <a href="#" class="nav-link">Datasets</a>
+            </li>
+        </ul>
+         <div class="justify col-md-3">
+                 <input class="form-control py-2 rounded-pill mr-1 pr-5" type="search" placeholder="Enter State" id="search-input">
+                    <label class sr-only for="search">
+                 <span class="input-group-append">
+                     <button class="btn btn-outline-light text-dark border-0 rounded-pill ml-n5" type="button">
+                        <i class="fa fa-search"></i>                               
+                    </button>
+                    </span>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4">Chart1</div>
+        <div class="col-md-4">Chart2</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">Chart3</div>
+        <div class="col-md-4">Chart4</div>
+    </div>
+    <div class="column">
+        <div class="col-md-4">
+        <table>
+            <thead>
+                <th>Date</th>
+                <th>State</th>
+                <th>New Cases</th>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.submission_date }}</td>
+                        <td>{{ result.state }}</td>
+                        <td>{{ result.new_case }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
