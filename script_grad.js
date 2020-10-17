@@ -50,7 +50,7 @@ Promise.all([
 
 function process() { 
   
-  // Define x values
+  // Define x values for state income
   let stateIncomeData = [];
   console.log(stateData);
   let stateDataFiltered = stateData.filter(d => d.LineCode === "3");
@@ -72,7 +72,7 @@ function process() {
   console.log(covidStateInfection);
   console.log(covidStateDeath);
 
-  function buildPlot(x_values, y_values, layout) {
+  function buildPlot(x_values, y_values, layout, tag) {
 
     let trace1 = {
       x: stateIncomeData,
@@ -83,10 +83,15 @@ function process() {
 
     let data = [trace1];
 
-    Plotly.newPlot("plot", data, layout);  
+    Plotly.newPlot(tag, data, layout);  
 
 
   } 
+  let latitude = []
+  for (row in stateList) {
+    latitude.push(+row["latitude"]);
+  }
+  console.log(latitude);
 
   // *****************************************************
   // STEP 2:  Create Chart:  Covid Infections vs. Latitude
@@ -97,7 +102,8 @@ function process() {
     yaxis: { title: "2020 Covid Infections"}
   };
 
-  buildPlot(covidStateInfection, Latitude, layout1);
+  let tag1 = "plot";
+  buildPlot(covidStateInfection, latitude, layout1);
   // *****************************************************
   // STEP 3:  Create Chart:  Covid Deaths vs. Latitude
   // *****************************************************
@@ -107,7 +113,8 @@ function process() {
     yaxis: { title: "2020 Covid Deaths"}
   };
 
-  buildPlot(covidStateDeath, Latitude, layout2);
+  let tag2 = "plot";
+  buildPlot(covidStateDeath, latitude, layout2);
   // *******************************************************************
   // STEP 4:  Create Chart:  Covid Infections vs. Per Captia Income 2019
   // *******************************************************************
@@ -117,6 +124,7 @@ function process() {
     xaxis: { title: "2019 Per Capita Income"},
     yaxis: { title: "2020 Covid Infections"}
   };
+  let tag3 = "plot";
   buildPlot(covidStateInfection, stateIncomeData, layout3);
 
 
@@ -128,5 +136,6 @@ function process() {
     xaxis: { title: "2019 Per Capita Income"},
     yaxis: { title: "2020 Covid Deaths"}
   };
+  let tag4 = "plot";
   buildPlot(covidStateDeath, stateIncomeData, layout4);
-  
+};
