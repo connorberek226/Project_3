@@ -42,41 +42,47 @@ Promise.all([
   stateData = files[0];
   covidData = files[1];
   stateList = files[2];
-  process();
+  
+  process(stateData, covidData, stateList);
 }).catch(function(err) {
   // handle error here
 })
+// console.log(stateData);
+// console.log(stateList);
 
+function process(stateData, covidData, stateList) { 
 
-function process() { 
-  
+  // console.log(stateData);
+  // console.log(covidData);
+  // console.log(stateList);
+
   // Define x values for state income
   let stateIncomeData = [];
-  console.log(stateData);
+  // console.log(stateData);
   let stateDataFiltered = stateData.filter(d => d.LineCode === "3");
-  console.log(stateDataFiltered);
+  // console.log(stateDataFiltered);
   for (row of stateDataFiltered) {
     stateIncomeData.push(+row["2019"]);
   };
-  console.log(stateIncomeData);
+  // console.log(stateIncomeData);
 
   // Define y values
 
   let covidStateInfection = [];
   let covidStateDeath = [];
-  console.log(covidData);
-  for (row of covidStateData) {
+  // console.log(covidData);
+  for (row of covidData) {
     covidStateInfection = covidStateInfection + row.case;
     covidStateDeath = covidStateDeath + row.deaths;
   };
-  console.log(covidStateInfection);
-  console.log(covidStateDeath);
+  // console.log(covidStateInfection);
+  // console.log(covidStateDeath);
 
   function buildPlot(x_values, y_values, layout, tag) {
 
     let trace1 = {
-      x: stateIncomeData,
-      y: covidStateInfection,
+      x: x_values,
+      y: y_values,
       type: "scatter",
       mode: "markers"
     };
@@ -87,11 +93,15 @@ function process() {
 
 
   } 
-  let latitude = []
-  for (row in stateList) {
-    latitude.push(+row["latitude"]);
-  }
-  console.log(latitude);
+  let latitude = [];
+  stateList.forEach(row => {
+  // for (row; row < stateList.length; row++) {
+    latitude.push(Number(row.latitude)); // removed +row.latitude plus
+    console.log(row);
+  });
+  // };
+  // console.log(stateList);
+  // console.log(latitude);
 
   // *****************************************************
   // STEP 2:  Create Chart:  Covid Infections vs. Latitude
@@ -102,8 +112,8 @@ function process() {
     yaxis: { title: "2020 Covid Infections"}
   };
 
-  let tag1 = "plot";
-  buildPlot(covidStateInfection, latitude, layout1);
+  let tag1 = "plot1";
+  buildPlot(covidStateInfection, latitude, layout1, tag1);
   // *****************************************************
   // STEP 3:  Create Chart:  Covid Deaths vs. Latitude
   // *****************************************************
@@ -113,8 +123,8 @@ function process() {
     yaxis: { title: "2020 Covid Deaths"}
   };
 
-  let tag2 = "plot";
-  buildPlot(covidStateDeath, latitude, layout2);
+  let tag2 = "plot2";
+  buildPlot(covidStateDeath, latitude, layout2, tag2);
   // *******************************************************************
   // STEP 4:  Create Chart:  Covid Infections vs. Per Captia Income 2019
   // *******************************************************************
@@ -124,8 +134,8 @@ function process() {
     xaxis: { title: "2019 Per Capita Income"},
     yaxis: { title: "2020 Covid Infections"}
   };
-  let tag3 = "plot";
-  buildPlot(covidStateInfection, stateIncomeData, layout3);
+  let tag3 = "plot3";
+  buildPlot(covidStateInfection, stateIncomeData, layout3, tag3);
 
 
   // *******************************************************************
@@ -136,6 +146,6 @@ function process() {
     xaxis: { title: "2019 Per Capita Income"},
     yaxis: { title: "2020 Covid Deaths"}
   };
-  let tag4 = "plot";
-  buildPlot(covidStateDeath, stateIncomeData, layout4);
+  let tag4 = "plot4";
+  buildPlot(covidStateDeath, stateIncomeData, layout4, tag4);
 };
