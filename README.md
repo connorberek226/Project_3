@@ -20,8 +20,16 @@ Relationship between Covid-19 infection rates and mortality rates with populatio
 ## Steps 
 1. Aquired data
 2. Cleaned and Merged data
-3. Analysis
-4. Display
+Covid-19 data, median income, and median population data joined in pgAdmin on key field states
+
+
+4. Analysis
+5. Display
+Maps
+Infection Rates across US or selected state with Popup (US only)
+Mortality Rates across US  or selected state with Popup (US only)
+![image](https://user-images.githubusercontent.com/60550835/117054520-2cdcf380-ace8-11eb-9e6f-7bb3a9625560.png)
+
 # Analysis
 # Conclusions
 Covid-19 vs. Latitude
@@ -32,4 +40,3 @@ No relationship for infection rate and mortality
 
 Covid-19 vs. Population
 Positive relationship between both infection rate and mortality rate and the population size
-![image](https://user-images.githubusercontent.com/60550835/117043349-1a0ff200-acdb-11eb-9c4b-1377e371a06c.png)
