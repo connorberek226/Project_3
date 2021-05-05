@@ -10,10 +10,15 @@ relationship between Covid-19 infection rates and mortality rates with populatio
 ## Tools 
 1. HTML
 2. Javascript
+   
    -Leaflet
+   
 3. SQL
+   
    -Postgres
+   
 5. Python
+   
    -Flask
    
 ## Steps 
