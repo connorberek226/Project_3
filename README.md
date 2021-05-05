@@ -33,7 +33,7 @@ Mortality Rates across US  or selected state with Popup (US only)
 
 # Conclusions
 Covid-19 vs. Latitude
-No relationship for infection rate and mortality
+                      No relationship for infection rate and mortality
 
 Covid-19 vs. Median Income
 No relationship for infection rate and mortality
