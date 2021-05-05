@@ -18,11 +18,18 @@ relationship between Covid-19 infection rates and mortality rates with populatio
    
 ## Steps 
 1. Aquired data
-Obtained Covid-19 data from CDC datasets 
+   -Obtained Covid-19 data from CDC datasets of Covid-19 infection and mortality rates broken down by state within the United States https://data.cdc.gov/Case-         Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36
+   -Bureau of Economic Analysis (BEA)
+![image](https://user-images.githubusercontent.com/60550835/117165839-d75e2080-ad93-11eb-9474-3e84ae6e04bd.png)
+ 
 3. Cleaned and Merged data
-Covid-19 data, median income, and median population data joined in pgAdmin on key field states
+   Covid-19 data, median income, and median population data joined in pgAdmin
 4. Analysis
-5. Display
+   Plotted Infection Rate by Latitude for US or state, Mortality Rate by Latitude for US or state, Infection Rate by Median Income and,
+   Mortality Rate by Median Income
+![image](https://user-images.githubusercontent.com/60550835/117167699-7c2d2d80-ad95-11eb-889b-f9bcd499a084.png)
+
+6. Display
 Maps
 Infection Rates across US or selected state with Popup (US only)
 Mortality Rates across US  or selected state with Popup (US only)
