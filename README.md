@@ -34,8 +34,6 @@ relationship between Covid-19 infection rates and mortality rates with populatio
    Mortality Rate by Median Income
 
 4. Display
-Map
-![image](https://user-images.githubusercontent.com/60550835/117054520-2cdcf380-ace8-11eb-9e6f-7bb3a9625560.png)
 
 # Analysis
 ![image](https://user-images.githubusercontent.com/60550835/117140803-cef9eb80-ad7b-11eb-9c73-6e897266569a.png)
